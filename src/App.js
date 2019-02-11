@@ -7,7 +7,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <AwButton text="click it"></AwButton>
+          <AwButton text="do not click"></AwButton>
         </header>
       </div>
     );
