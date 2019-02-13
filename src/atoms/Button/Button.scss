@@ -1,0 +1,11 @@
+@import 'styles/variables.scss';
+
+.submit {
+	background-color: $submitPrimary;
+	border-color: $submitSecondary;
+}
+
+.submit:hover {
+  background-color: #1888E8;
+  border-color: $submitPrimary;
+}
