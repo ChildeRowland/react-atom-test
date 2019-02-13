@@ -4,7 +4,7 @@ import Button from 'atoms/Button/Button'
 import './Search.scss'
 
 // for testing - remove
-import searchSrv from 'requests/searchRequest';
+import searchHelper from 'helpers/searchHelper';
 
 class Search extends Component {
 
@@ -15,22 +15,27 @@ class Search extends Component {
   	  searchValue: '' 
   	};
 
-  	this.search = this.search.bind(this);
   }
 
-  search() {
+  updateInputValue = (event) => {
+  	this.setState({
+  		searchValue: event.target.value
+  	});
+  }
+
+  search = () => {
   	const self = this;
 
   	self.setState(state => ({
-  	  loading: true,
-  	  searchValue: ''
+  	  loading: true
   	}));
 
-  	searchSrv.getResults()
+  	searchHelper.getResults(this.state.searchValue)
   		.then(function(r) {
   			console.log(r)
   			self.setState(state => ({
-	  	    loading: false
+	  	    loading: false,
+	  	    searchValue: ''
 	  	  }));
   		});
   }
@@ -40,7 +45,13 @@ class Search extends Component {
       <form>
         <div className="form-row align-items-center">
     	  <div className="col-auto">
-	  	    <input type="text" value={this.state.value} className="form-control" id="searchInput" />
+	  	    <input 
+	  	    	type="text" 
+	  	    	value={this.state.searchValue} 
+	  	    	onChange={event => this.updateInputValue(event)} 
+	  	    	className="form-control" 
+	  	    	id="searchInput" 
+  	    	/>
 	  	  </div>
 	  	  <div className="col-auto">
 	  		<Button
@@ -54,7 +65,7 @@ class Search extends Component {
   		  </div>
   		</div>
       </form>
-	);
+		);
   }
 }
 
