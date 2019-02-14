@@ -6,15 +6,15 @@ import './Button.scss';
 class Button extends Component {
   render() {
     return (
-        <button 
-          type="button"
-          className={`${this.props.className} ${this.props.type}`}
-          onClick={this.props.clickAction}
-          disabled={this.props.loading}
-        >
-        {this.props.loading ? this.props.alternateText : this.props.text}
-        </button>
-      );
+      <button 
+        type={this.props.type === 'submit' ? 'submit' : 'button'}
+        className={`${this.props.className} ${this.props.type}`}
+        onClick={this.props.clickAction}
+        disabled={this.props.loading}
+      >
+      {this.props.loading ? this.props.alternateText : this.props.text}
+      </button>
+    );
   }
 }
 

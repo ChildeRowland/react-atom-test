@@ -1,7 +1,11 @@
 import searchSrv from 'services/searchSrv';
 
+const EventEmitter = require('events');
+const searchEmitter = new EventEmitter();
+
 const searchHelper = {
 	
+	searchEmitter: searchEmitter,
 	searchTerm: '',
 	searchResults : [],
 
@@ -30,9 +34,10 @@ const searchHelper = {
 		const self = this;
 
 		return searchSrv.getResults(searchTerm)
-		.then(function(r) {
-			return self.setSearchResults(r);
-		});
+			.then(function(r) {
+				searchEmitter.emit('updated-results');
+				return self.setSearchResults(r);
+			});
 	}
 
 }
