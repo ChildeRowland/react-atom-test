@@ -1,45 +1,53 @@
 import searchSrv from 'services/searchSrv';
+import awEventEmitter from './awEventEmitter';
 
-const EventEmitter = require('events');
-const searchEmitter = new EventEmitter();
+/********* SERVICE VARIABLES **********/
+
+// let searchTerm = '';
+const searchResults = [];
+
+/********* SERVICE OBJECT **********/
 
 const searchHelper = {
 	
-	searchEmitter: searchEmitter,
-	searchTerm: '',
-	searchResults : [],
+	// service specific functions
 
-	getSearchResults: function () {
-		return this.searchResults;
+	getResults: function() {
+		return searchResults;
 	},
 
-	clearSearchResults: function () {
-		this.searchResults.length = 0;
+	clearResults: function() {
+		searchResults.length = 0;
 	}, 
 
-	setSearchResults: function (newSearchResults) {
+	setResults: function(newSearchResults) {
 		const self = this;
 
-		self.clearSearchResults();
+		self.clearResults();
 
 		for (let i = 0; i < newSearchResults.length; i++) {
 			// add validation check
-			self.searchResults.push(newSearchResults[i]);
+			searchResults.push(newSearchResults[i]);
 		}
 
-		return self.getSearchResults();
+		return self.getResults();
 	},
 
-	getResults: function (searchTerm) {
+	// request layer functions 
+
+	getSearchResults: function(searchTerm) {
 		const self = this;
 
-		return searchSrv.getResults(searchTerm)
+		return searchSrv.get(searchTerm)
 			.then(function(r) {
-				searchEmitter.emit('updated-results');
-				return self.setSearchResults(r);
+				self.emit('updated-results');
+				return self.setResults(r);
 			});
 	}
 
-}
+};
+
+// extend the service with the emitter to share data between components
+Object.assign(searchHelper, awEventEmitter);
 
 export default searchHelper;

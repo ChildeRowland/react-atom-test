@@ -1,7 +1,7 @@
 
 const searchSrv = {
 
-	getResults: function (searchStr) {
+	get: function (searchStr) {
 
 		searchStr = searchStr || '';
 
@@ -10,13 +10,13 @@ const searchSrv = {
 		return new Promise (function(resolve, reject) {
 			setTimeout(() => {
 				resolve(result);
-			}, 3000);
+			}, 2500);
 		});
 		
 	}
 	
 	// example axios request
-	// getSearchResults: function (searchStr) {
+	// get: function (searchStr) {
 	// 	return axios({
 	// 		method: 'GET',
 	// 		url: '/search',

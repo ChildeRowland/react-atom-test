@@ -6,16 +6,24 @@ class SearchResults extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = { searchResults: [] };
-		searchHelper.searchEmitter.on('updated-results', () => {
-			this.setState({ searchResults: searchHelper.getSearchResults() });
+		this.state = { results: [] };
+		searchHelper.on('updated-results', () => {
+			this.setState({ results: searchHelper.getResults() });
 		});
 	}
 
 	render() {
 		return(
-			<ul>
-				{this.state.searchResults.map((r,i) => <li key={i}>{r}</li>)}
+			<ul className="list-group">
+				{this.state.results.map((r,i) => { 
+					return (
+						<li 
+							key={i} 
+							className="list-group-item list-group-item-secondary">
+							{r}
+						</li>
+					);
+				})}
 			</ul>
 		);
 	}

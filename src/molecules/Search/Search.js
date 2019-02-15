@@ -29,7 +29,7 @@ class Search extends Component {
   	  loading: true
   	}));
 
-  	searchHelper.getResults(this.state.searchValue)
+  	searchHelper.getSearchResults(this.state.searchValue)
   		.then(function(r) {
   			console.log(r)
   			self.setState(state => ({
@@ -41,7 +41,7 @@ class Search extends Component {
 
   render () {
     return (
-    	<React.Fragment>
+    	<Fragment>
 	      <form>
 	        <div className="form-row align-items-center">
 	    	  <div className="col-auto">
@@ -66,49 +66,9 @@ class Search extends Component {
 	  		</div>
 	      </form>
 	      <SearchResults></SearchResults>
-      </React.Fragment>
+      </Fragment>
 		);
   }
 }
-
-
-// class SearchCtrl extends Component {
-// 	state = { 
-// 	  loading: false,	
-// 	  searchValue: '' 
-// 	};
-
-// 	search = () => {
-//   	const self = this;
-
-//   	self.setState(state => ({
-//   	  loading: true
-//   	}));
-
-//   	searchHelper.getResults(this.state.searchValue)
-//   		.then(function(r) {
-//   			console.log(r)
-//   			self.setState(state => ({
-// 	  	    loading: false,
-// 	  	    searchValue: ''
-// 	  	  }));
-//   		});
-//   }
-
-//   render() {
-//   	const { loading, searchValue } = this.state;
-
-//   	return (
-//   		<div>
-//   			{this.props.render({
-//   				search: this.search,
-//   				loading: this.loading,
-//   				searchValue: this.searchValues
-//   			})}
-//   		</div>
-//   	);
-//   }
-
-// }
 
 export default Search;
