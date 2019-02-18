@@ -1,5 +1,5 @@
 
-const searchSrv = {
+const searchGateway = {
 
 	get: function (searchStr) {
 
@@ -39,4 +39,4 @@ const searchSrv = {
 	
 };
 
-export default searchSrv
+export default searchGateway;

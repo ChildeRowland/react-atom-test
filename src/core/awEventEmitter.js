@@ -19,4 +19,4 @@ const awEventEmitter = {
 
 };
 
-export default awEventEmitter;
+export default Object.freeze(awEventEmitter);

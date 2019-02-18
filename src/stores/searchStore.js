@@ -1,5 +1,5 @@
-import searchSrv from 'services/searchSrv';
-import awEventEmitter from './awEventEmitter';
+import searchGateway from 'gateways/searchGateway';
+import awEventEmitter from 'core/awEventEmitter';
 
 /********* SERVICE VARIABLES **********/
 
@@ -8,9 +8,9 @@ const searchResults = [];
 
 /********* SERVICE OBJECT **********/
 
-const searchHelper = {
+const searchStore = {
 	
-	// service specific functions
+	// store functions
 
 	getResults: function() {
 		return searchResults;
@@ -30,24 +30,27 @@ const searchHelper = {
 			searchResults.push(newSearchResults[i]);
 		}
 
+		self.emit('updated-results');
+
 		return self.getResults();
 	},
 
-	// request layer functions 
+	// gateway functions 
 
 	getSearchResults: function(searchTerm) {
 		const self = this;
 
-		return searchSrv.get(searchTerm)
-			.then(function(r) {
-				self.emit('updated-results');
+		return searchGateway.get(searchTerm)
+			.then(function success (r) {
 				return self.setResults(r);
+			}, function error (e) {
+				console.log(e);
 			});
 	}
 
 };
 
 // extend the service with the emitter to share data between components
-Object.assign(searchHelper, awEventEmitter);
+Object.assign(searchStore, awEventEmitter);
 
-export default searchHelper;
+export default Object.freeze(searchStore);

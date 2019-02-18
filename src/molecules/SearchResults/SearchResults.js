@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
-import searchHelper from 'helpers/searchHelper';
+import searchStore from 'stores/searchStore';
 
 class SearchResults extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = { results: [] };
-		searchHelper.on('updated-results', () => {
-			this.setState({ results: searchHelper.getResults() });
+		searchStore.on('updated-results', () => {
+			this.setState({ results: searchStore.getResults() });
 		});
 	}
 

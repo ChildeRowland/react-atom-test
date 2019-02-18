@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
-import searchHelper from 'helpers/searchHelper';
+import searchStore from 'stores/searchStore';
 import Button from 'atoms/Button/Button';
 import SearchResults from 'molecules/SearchResults/SearchResults';
 import './Search.scss';
@@ -29,7 +29,7 @@ class Search extends Component {
   	  loading: true
   	}));
 
-  	searchHelper.getSearchResults(this.state.searchValue)
+  	searchStore.getSearchResults(this.state.searchValue)
   		.then(function(r) {
   			console.log(r)
   			self.setState(state => ({
@@ -38,6 +38,11 @@ class Search extends Component {
 	  	  }));
   		});
   }
+
+  clear = () => {
+  	searchStore.setResults([]);
+		this.setState(state => ({ searchValue: '' }));
+	}	
 
   render () {
     return (
@@ -60,6 +65,12 @@ class Search extends Component {
 		  	  	  alternateText="searching" 
 		  	  	  loading={this.state.loading} 
 		  	  	  clickAction={this.search}
+		  	    >
+		  		</Button>
+		  		<Button
+		  	  	  type="button" 
+		  	      text="clear"
+		  	      clickAction={this.clear}
 		  	    >
 		  		</Button>
 	  		  </div>
